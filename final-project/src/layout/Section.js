@@ -29,7 +29,7 @@ const Section = () =>{
   user ? <Redirect to="/" /> : <Route {...props} />;
 
   return(    
-    <section style={{margin:"5%"}}>
+    <section style={{margin:"6%"}}>
       <Switch>
         <Route exact path="/about" component={About}/>
         <LoginRoute exact path="/login" user={user} component={Login}/>

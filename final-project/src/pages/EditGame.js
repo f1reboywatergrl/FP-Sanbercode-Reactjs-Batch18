@@ -1,9 +1,71 @@
 import React, {useState, useEffect} from "react"
 import axios from "axios"
 import "../Movies.css"
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { blue } from '@material-ui/core/colors';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
+
+const useStyles = makeStyles({
+  avatar: {
+    backgroundColor: blue[100],
+    color: blue[600],
+  },
+});
+
 
 const EditGames = () => {
+  const SortDialog = (props) =>{
+    const { onClose, selectedValue, open } = props;
+
+    const handleClose = () => {
+      onClose(selectedValue);
+    };
+
+    const handleListItemClick = (value) => {
+      handleSelectedSort(value);
+      onClose(value);
+    };
+
+    return(
+      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <DialogTitle id="simple-dialog-title">Sort items by...</DialogTitle>
+          <List>
+              <ListItem autoFocus button onClick={() => handleListItemClick('Default')}>
+                  <ListItemText>Reset Default</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('name')}>
+                  <ListItemText>Name</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('genre')}>
+                  <ListItemText>Genre</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('release')}>
+                  <ListItemText>Release Year</ListItemText>
+              </ListItem>
+          </List>
+      </Dialog>
+    )
+  }
   
+  SortDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+  };  
+  const [open, setOpen] = React.useState(false);
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
   const [games, setGames] =  useState(null)
   const [input, setInput]  =  useState({
     name: "",
@@ -17,7 +79,6 @@ const EditGames = () => {
   const [selectedId, setSelectedId]  =  useState(0)
   const [statusForm, setStatusForm]  =  useState("create")
   const [search, setSearch] = useState("")
-  const [sort, setSort] = useState("")
 
   useEffect( () => {
     if (games === null){
@@ -171,9 +232,9 @@ const EditGames = () => {
 
     return(
       <>
-        <button onClick={handleEdit}>Edit</button>
+        <button  className="btn btn-outline-warning" onClick={handleEdit} style={{marginRight:"1%"}}>Edit</button>
         &nbsp;
-        <button onClick={handleDelete}>Delete</button>
+        <button className="btn btn-outline-danger" onClick={handleDelete}>Delete</button>
       </>
     )
   }
@@ -188,7 +249,9 @@ const EditGames = () => {
       return str.slice(0, num) + '...'
     }
   }
-  
+  function handleSelectedSort(attribute){
+    submitSort(attribute);
+  }
   function submitSort(attribute){
     attribute.preventDefault()
     console.log(attribute)
@@ -210,6 +273,7 @@ const EditGames = () => {
     }
     setGames(temp2)*/
   }
+
   const submitSearch = (e) =>{
     e.preventDefault()
     axios.get(`https://backendexample.sanbersy.com/api/games`)
@@ -232,30 +296,23 @@ const EditGames = () => {
     
  
   }
-
   const handleChangeSearch = (e)=>{
     setSearch(e.target.value)
   }
+  const resetSearch = ()=>{
+    setSearch("")
+  }
+
   return(
     <>
       <div>
-        <form onSubmit={submitSearch} style={{marginTop:"1%"}}>
-          <input type="text" value={search} onChange={handleChangeSearch} />
-          <button>search</button>
-        </form>
-      </div>
-      <div>
-        <form onSubmit={()=>submitSort("name")}>
-          <label>Sort data by...</label>
-          <select>
-            <option onChange={()=>submitSort("Default")}>Default</option>
-            <option onChange={()=>submitSort("name")}>Name</option>
-            <option onChange={()=>submitSort("genre")}>Genre</option>
-            <option onChange={()=>submitSort("platform")}>Platform</option>
-            <option onChange={()=>submitSort("release")}>Release</option>
-          </select>
-          <button>submit</button>
-        </form>
+        <form onSubmit={submitSearch}>
+          <input type="text" value={search} onChange={handleChangeSearch} style={{height:"35px",width:"250px",marginRight:"1%"}} placeholder="Search for a game title..."/>
+          <button className="btn btn-outline-info" style={{marginRight:"1%"}}>Search</button>
+          <button className="btn btn-outline-danger" onClick={resetSearch}style={{marginRight:"1%"}}>Reset Field</button>
+          <button className="btn btn-outline-success" onClick={handleClickOpen}>Sort Data</button>
+          <SortDialog open={open} onClose={handleClose} elevation={4}/>
+        </form>          
       </div>
 
       <h1>Daftar Game</h1>
@@ -269,7 +326,7 @@ const EditGames = () => {
             <th>Multi&nbsp;Player</th>
             <th>Platform</th>
             <th>Release</th>
-            <th style={{width:"130px"}}>Action</th>
+            <th style={{width:"150px"}}>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -283,7 +340,7 @@ const EditGames = () => {
                     <td>{item.genre}</td>
                     <td>{item.singlePlayer===1?"Yes":"No"}</td>
                     <td>{item.multiplayer===1?"Yes":"No"}</td>
-                    <td>{item.platform}</td>
+                    <td>{truncateString(item.platform, 20)}</td>
                     <td>{item.release}</td>
                     <td>
                       <Action itemId={item.id} />
@@ -357,7 +414,7 @@ const EditGames = () => {
         </div>
         <br/>
         <br/>
-        <button>Submit</button>
+        <button className="btn btn-outline-info">Submit</button>
       </form>
     </>
   )

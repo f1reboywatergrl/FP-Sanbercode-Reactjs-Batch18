@@ -1,8 +1,60 @@
 import React, {useState, useEffect} from "react"
 import axios from "axios"
 import "../Movies.css"
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+
+const SortDialog = (props) =>{
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value) => {
+    onClose(value);
+  };
+
+  return(
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <DialogTitle id="simple-dialog-title">Sort items by...</DialogTitle>
+        <List>
+            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItemText >Reset Default</ListItemText>
+            </ListItem>
+            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItemText>Title</ListItemText>
+            </ListItem>
+            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItemText>Genre</ListItemText>
+            </ListItem>
+            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItemText>Release Year</ListItemText>
+            </ListItem>
+            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItemText>Rating</ListItemText>
+            </ListItem>
+            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItemText>Duration</ListItemText>
+            </ListItem>
+        </List>
+    </Dialog>
+  )
+}
 
 const EditMovies = () => {
+  const [open, setOpen] = React.useState(false);
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
   
   const [movies, setMovies] =  useState(null)
   const [input, setInput]  =  useState({
@@ -169,9 +221,9 @@ const EditMovies = () => {
 
     return(
       <>
-        <button onClick={handleEdit}>Edit</button>
+        <button className="btn btn-outline-warning" style={{marginRight:"1%"}} onClick={handleEdit}>Edit</button>
         &nbsp;
-        <button onClick={handleDelete}>Delete</button>
+        <button className="btn btn-outline-danger" onClick={handleDelete}>Delete</button>
       </>
     )
   }
@@ -213,13 +265,18 @@ const EditMovies = () => {
   const handleChangeSearch = (e)=>{
     setSearch(e.target.value)
   }
-
+  const resetSearch = ()=>{
+    setSearch("")
+  }
   return(
     <>
       <div>
         <form onSubmit={submitSearch}>
-          <input type="text" value={search} onChange={handleChangeSearch} />
-          <button>search</button>
+          <input type="text" value={search} onChange={handleChangeSearch} style={{height:"35px",width:"250px",marginRight:"1%"}} placeholder="Search a movie title..." />
+          <button className="btn btn-outline-info" style={{marginRight:"1%"}}>Search</button>
+          <button className="btn btn-outline-danger" onClick={resetSearch} style={{marginRight:"1%"}}>Reset Field</button>
+          <button className="btn btn-outline-success" onClick={handleClickOpen}>Sort Data</button>
+          <SortDialog open={open} onClose={handleClose} elevation={4}/>
         </form>
       </div>
 
@@ -234,7 +291,7 @@ const EditMovies = () => {
             <th>Duration</th>
             <th>Genre</th>
             <th>Rating</th>
-            <th>Action</th>
+            <th style={{width:"150px"}}>Action</th>
           </tr>
         </thead>
         <tbody>

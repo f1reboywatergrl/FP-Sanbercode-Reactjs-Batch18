@@ -14,6 +14,7 @@ function minuteToHours(num){
   var rminutes = Math.round(minutes);
   return ( rhours === 0 ? "" : rhours + " h") + (rminutes === 0 ? "" : " " + rminutes + " m")
 }
+
 class Movies extends Component {
   constructor(props){
     super(props)
@@ -50,24 +51,38 @@ class Movies extends Component {
         {
             this.state.movies.map((item)=>{
             return(
-                <Card style={{width:"85%", margin:"1% auto"}} key={item.id}>
-                    <Card.Header style={{justifyItems:"space-around",background:"#1F2833"}}>
-                        <Card.Img variant="top" style={{width: "512px", height: "384px", objectFit: "cover",margin:"auto",display:"block"}} src={item.image_url}/>
-                        <Card.Title style={{margin:"2% 1%",textAlign:"center",fontSize:"2.5em"}}><strong>{item.title}</strong></Card.Title>
-                        <div style={{display:"flex",justifyContent:"center",flexDirection:"row"}}>
-                          <button type="button" class="btn btn-outline-warning" style={{cursor:"default",marginRight:"1%",justifyItems:"space-between"}}><StarRateIcon fontSize="medium"/>  {item.rating}/10</button>                   
-                          <button type="button" class="btn btn-outline-info" style={{cursor:"default",marginRight:"1%"}}><QueryBuilderIcon fontSize="medium"/>  {minuteToHours(item.duration)}</button>                   
-                          <button type="button" class="btn btn-outline-success" style={{cursor:"default"}}><CalendarTodayIcon fontSize="medium"/>  {item.year}</button>                   
-                        </div>
-                        <div style={{display:"flex",justifyContent:"center",flexDirection:"row",marginTop:"1%"}}>
-                          {
-                            item.genre.split(',').map((items)=>{
-                              return(
-                                <button class="btn btn-outline-danger" style={{cursor:"default",marginRight:"1%"}}>{items}</button>
-                              )    
-                            })
-                          }                            
-                        </div>
+                <Card style={{marginBottom:"1.5%"}}key={item.id}>
+                    <Card.Header style={{justifyItems:"space-between",background:"#1F2833"}}>
+                      <div style={{background:"#16262E",display:"flex",justifyContent:"left",flexDirection:"row"}}>
+                          <Card.Img variant="top" style={{width: "512px", height: "384px", objectFit: "cover",margin:"auto",display:"block",marginLeft:"1%"}} src={item.image_url}/>
+                          <div style={{padding:"2.5%",width:"100%"}}>
+                            <div style={{justifyContent:"center",flexDirection:"row",borderBottom: "1px solid lightgrey", paddingBottom:"7%",width:"100%"}}>
+                              <div>
+                                <Card.Title style={{textAlign:"center",fontSize:"3em"}}><strong>{item.title}</strong></Card.Title>                                
+                              </div>
+                              <div style={{display:"flex",justifyContent:"center",flexDirection:"row",marginTop:"4%"}}>
+                                <button type="button" class="btn btn-primary">View Details</button>                                 
+                              </div>
+                              
+                            </div>
+                            <div style={{display:"flex",justifyContent:"center",flexDirection:"row",borderBottom: "1px solid lightgrey",padding:"3%"}}>
+                              <button type="button" class="btn btn-outline-warning" style={{cursor:"default",marginRight:"3%",justifyItems:"space-between"}}><StarRateIcon fontSize="medium"/>  {item.rating} / 10</button>                   
+                              <button type="button" class="btn btn-outline-info" style={{cursor:"default",marginRight:"3%"}}><QueryBuilderIcon fontSize="medium"/>  {minuteToHours(item.duration)}</button>                   
+                              <button type="button" class="btn btn-outline-success" style={{cursor:"default"}}><CalendarTodayIcon fontSize="medium"/>  {item.year}</button>                   
+                            </div>
+                            <div style={{display:"flex",justifyContent:"center",flexDirection:"row",borderBottom: "1px solid lightgrey",padding:"3%"}}>
+                              {
+                                item.genre.split(',').map((items)=>{
+                                  return(
+                                    <button class="btn btn-outline-danger" style={{cursor:"default",marginRight:"3%"}}>{items}</button>
+                                  )    
+                                })
+                              }                            
+                            </div>                            
+                          </div>
+                     
+                      </div>
+
                     </Card.Header>
                     <Card.Body>                      
                         <Card.Subtitle style={{fontSize:"1.25em"}}>

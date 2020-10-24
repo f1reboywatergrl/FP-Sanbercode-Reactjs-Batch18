@@ -50,6 +50,38 @@
           box-sizing: border-box;
 }
 
+body::-webkit-scrollbar{
+  width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track{
+  background: #000000;
+}
+
+body::-webkit-scrollbar-thumb{
+  background: #08ad97;
+}
+
+.movies:hover{
+  color: #fdec6e;
+  -webkit-filter: drop-shadow(3px 3px 7px rgba(251, 123, 4, 0.5));
+  filter: drop-shadow(3px 3px 13px rgba(255, 190, 11, 0.5));
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.games:hover{
+  color: #fdec6e;
+  -webkit-filter: drop-shadow(3px 3px 7px rgba(4, 251, 210, 0.5));
+  filter: drop-shadow(3px 3px 7px rgba(4, 251, 210, 0.5));
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
