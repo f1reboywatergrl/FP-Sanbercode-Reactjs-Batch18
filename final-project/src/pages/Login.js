@@ -3,13 +3,12 @@ import {UserContext} from "../context/UserContext"
 import {
   Redirect
 } from "react-router-dom";
-import axios from "axios" 
+import axios from "axios"
+import swal from 'sweetalert'; 
 
 const Login = () =>{
   const [, setUser] = useContext(UserContext)
-  const [dataUser, setDataUser] = useState(null)
   const [input, setInput] = useState({email: "", password: "",token:"",name:""})
-  const [inputChange, setInputChange] = useState({token:"",password:"",new_password:"",new_confirm_password:""})
   const [statusLogin, setStatusLogin] = useState("login");
 
   function redirectLogin(){
@@ -27,16 +26,15 @@ const Login = () =>{
         password:input.password
       })
       .then(res => {
-          console.log(res)
-          console.log(res.data.user.name)
-          console.log(res.data.token)    
           setInput({...input,name:res.data.user.name,token:res.data.token})                                
           setUser({email:input.email})
           localStorage.setItem("email", JSON.stringify({email: input.email, password: input.password,token:input.token, name: res.data.user.name,token:res.data.token}))
-        
           redirectLogin()
+          swal("Successfully logged in!",{
+            button:"Close"
+          })
       }).catch(res=>{
-        console.log("Gabisa")
+          swal ( "Login failed!" ,  "Invalid credentials! Have you made an account?" ,  "error" )
       })
     }
     else if(statusLogin==="register"){
@@ -46,12 +44,14 @@ const Login = () =>{
         name:input.name
       })
       .then(res => {
-          console.log(input)
-          setUser({email:input.email})
-          localStorage.setItem("email", JSON.stringify({email: input.email, password: input.password,name:input.name}))
+          setUser({email:input.email})         
+          localStorage.setItem("email", JSON.stringify({email: input.email, password: input.password,token:res.data.token,name:res.data.user.name}))
           redirectLogin()
+          swal("Account successfully registered!",{
+            button:"Close"
+          })
       }).catch(res=>{
-        console.log("Gabisa")
+        swal ( "Registration failed!" ,  "Recheck your inputs or register under a different email." ,  "error" )
       })
     }
   }
@@ -109,8 +109,6 @@ const Login = () =>{
           
         </form>        
       </div>
-
-                  
     
       :
       <div>

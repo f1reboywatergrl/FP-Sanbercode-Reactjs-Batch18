@@ -4,7 +4,7 @@ import {
   Redirect
 } from "react-router-dom";
 import axios from "axios" 
-
+import swal from 'sweetalert';
 const ChangePass = () =>{
   const [, setUser] = useContext(UserContext)
   const [inputChange, setInputChange] = useState({password:"",new_password:"",new_confirm_password:""})
@@ -13,11 +13,7 @@ const ChangePass = () =>{
       return <Redirect to ="/about"/>      
   }  
 
-  useEffect( () => {
-      console.log(userData)
-  })
   const userData = JSON.parse(localStorage.getItem('email'))
-
 
   const handleSubmit = (event) =>{
     event.preventDefault()
@@ -29,12 +25,14 @@ const ChangePass = () =>{
         new_confirm_password: inputChange.new_confirm_password
       })
       .then(res => {
-          console.log("Hehe")
           setUser({email:inputChange.email})
           localStorage.setItem("email", JSON.stringify({...userData,password:inputChange.new_password}))
           redirectLogin()
+          swal("Password successfully changed!",{
+            button:"Close"
+          })
       }).catch(res=>{
-        console.log("Gabisa")
+        swal ( "Invalid input!" ,  "Please recheck your password inputs!" ,  "error" )
       })
   }
 
@@ -80,8 +78,7 @@ const ChangePass = () =>{
             <span class="focus-bg"></span>
           </label><br/><br/>
           <button className="btn btn-outline-info">Change Password</button>
-        </form>                  
-
+        </form>                
     </>
   )
 }

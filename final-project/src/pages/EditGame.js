@@ -9,6 +9,7 @@ import { blue } from '@material-ui/core/colors';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
+import swal from 'sweetalert';
 
 const useStyles = makeStyles({
   avatar: {
@@ -163,6 +164,9 @@ const EditGames = () => {
         })
         .then(res => {
             setGames([...games, {id: res.data.id, ...input}])
+            swal("Data successfully created!",{
+              button:"Close"
+            })
         })
       }else if(statusForm === "edit"){
         axios.put(`https://backendexample.sanbersy.com/api/games/${selectedId}`, {
@@ -184,6 +188,11 @@ const EditGames = () => {
             singleGame.release = input.release
             singleGame.image_url = input.image_url
             setGames([...games])
+            swal("Data successfully changed!",{
+              button:"Close"
+            })
+        }).catch(res =>{
+           swal ( "Invalid input!" ,  "Please recheck your inputs!" ,  "error" )
         })
         
       }
@@ -208,8 +217,10 @@ const EditGames = () => {
   
       axios.delete(`https://backendexample.sanbersy.com/api/games/${itemId}`)
       .then(res => {
-        console.log(res)
-      }).catch((response) => console.log('error', response));
+        swal("Data successfully deleted!",{
+          button:"Close"
+        })
+      }).catch(()=>swal("Oops!","Unknown error occured.","error"));
             
       setGames([...newGames])
       

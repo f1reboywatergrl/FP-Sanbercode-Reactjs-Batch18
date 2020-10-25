@@ -50,6 +50,25 @@
           box-sizing: border-box;
 }
 
+.swal-modal{
+  background-color: var(--gray-dark);
+
+}
+.swal-text{
+  color: #ffffff;
+}
+
+.swal-footer{
+  color: #ffffff;
+}
+.swal-title{
+  color:#ffffff;
+}
+
+.swal-button{
+  color: rgb(9, 14, 13);
+  background-color: #217dbb;  
+}
 body::-webkit-scrollbar{
   width: 0.25rem;
 }

@@ -1,5 +1,5 @@
 
-import React, {useContext} from 'react';
+import React, {useContext,useEffect} from 'react';
 import Logo from '../logo.svg'
 import ITB from '../logo.png'
 import '../pages/bootstrap.css'
@@ -31,13 +31,19 @@ const useStyles = makeStyles((theme) => ({
 //
 const Nav = () => {
     const [user, setUser] = useContext(UserContext)
+    //const [theme, setTheme] = useContext(LightDarkContext)
   
     const handleLogout = () =>{
       setUser(null)
       localStorage.removeItem("email")
     }
-
     const classes = useStyles();
+    const switchMode = (e) =>{
+      e.stopPropagation()
+      //setTheme(theme==="dark"?"light":"dark")
+    }
+    useEffect(()=>console.log(LightDarkContext) )
+    //{ user!==null?<Dropdown.Header>Welcome back, {userData.name}!</Dropdown.Header>:null}
     return(    
       <AppBar style={{position:"static"}}>
         <Toolbar style={{background:"#041624",padding:"0.25%",display:"flex",flexDirection:"row",justifyContent:"space-between",marginBottom:"0.5%",position:"fixed",top:0,width:"100%",zIndex:1}}>
@@ -49,8 +55,9 @@ const Nav = () => {
                       Menu
                   </Dropdown.Toggle> 
                   <Dropdown.Menu>
+                                            
                       <Dropdown.Item href="/about">About</Dropdown.Item>
-                      {user && <Dropdown.Divider/>}
+                      { user && <Dropdown.Divider/>}
 
                       { user && <Dropdown.Header>View Data</Dropdown.Header>}                    
                       { user && <Dropdown.Item href="/games">Games</Dropdown.Item> }
@@ -66,8 +73,8 @@ const Nav = () => {
                       { user && <Dropdown.Item href="#" style={{cursor: "pointer"}} onClick={handleLogout}>Logout</Dropdown.Item> }
                       { user && <Dropdown.Item href="/changepass">Change Password</Dropdown.Item>}
                       <Dropdown.Divider/>
-                      <Dropdown.Item>
-                          <WbIncandescentIcon></WbIncandescentIcon><Switch></Switch>
+                      <Dropdown.Item onClick={e => e.stopPropagation()}>
+                          <WbIncandescentIcon onClick={e => e.stopPropagation()}></WbIncandescentIcon><Switch onClick={e => switchMode(e)}></Switch>
                       </Dropdown.Item>                                           
                   </Dropdown.Menu>                   
               </Dropdown>

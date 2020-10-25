@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import swal from 'sweetalert';
 
 const SortDialog = (props) =>{
   const { onClose, selectedValue, open } = props;
@@ -152,6 +153,9 @@ const EditMovies = () => {
         })
         .then(res => {
             setMovies([...movies, {id: res.data.id, ...input}])
+            swal("Data successfully created!",{
+              button:"Close"
+            })
         })
       }else if(statusForm === "edit"){
         axios.put(`https://www.backendexample.sanbersy.com/api/movies/${selectedId}`, {
@@ -172,6 +176,9 @@ const EditMovies = () => {
             singleMovie.genre = input.genre
             singleMovie.rating = input.rating
             setMovies([...movies])
+            swal("Data successfully changed!",{
+              button:"Close"
+            })
         })
         
       }
@@ -196,7 +203,9 @@ const EditMovies = () => {
   
       axios.delete(`https://www.backendexample.sanbersy.com/api/movies/${itemId}`)
       .then(res => {
-        console.log(res)
+        swal("Data successfully deleted!",{
+          button:"Close"
+        }).catch(()=>swal("Oops!","Unknown error occured.","error"));
       })
             
       setMovies([...newMovies])

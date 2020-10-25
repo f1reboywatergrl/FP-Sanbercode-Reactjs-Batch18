@@ -96,7 +96,7 @@ EmailDialog.propTypes = {
 
 const About = () =>{
     const [open, setOpen] = React.useState(false);
-  
+
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -136,7 +136,7 @@ const About = () =>{
                                     <p style={{fontSize:"1.15em"}}>
                                         <strong>About the project</strong>:<br/>
                                         This project was mainly built with React, along with Material UI, React-Bootstrap, and Bootswatch to beautify several
-                                        aspects of the design. This project is my final project submission for the September-October 2020 Front End
+                                        aspects of the design. This project is my final project submission for a 2020 Front End
                                         Development Bootcamp.<br/><br/>
 
                                         In this web app, you can view the best films and games, fetched by an API, and you can also execute CRUD (Create-Read-Update-Delete)
