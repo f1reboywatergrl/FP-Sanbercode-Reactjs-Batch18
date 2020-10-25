@@ -28,7 +28,7 @@ const EditGames = () => {
     };
 
     const handleListItemClick = (value) => {
-      handleSelectedSort(value);
+      submitSort(value);
       onClose(value);
     };
 
@@ -36,9 +36,6 @@ const EditGames = () => {
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
         <DialogTitle id="simple-dialog-title">Sort items by...</DialogTitle>
           <List>
-              <ListItem autoFocus button onClick={() => handleListItemClick('Default')}>
-                  <ListItemText>Reset Default</ListItemText>
-              </ListItem>
               <ListItem autoFocus button onClick={() => handleListItemClick('name')}>
                   <ListItemText>Name</ListItemText>
               </ListItem>
@@ -260,31 +257,33 @@ const EditGames = () => {
       return str.slice(0, num) + '...'
     }
   }
-  function handleSelectedSort(attribute){
-    submitSort(attribute);
-  }
   function submitSort(attribute){
-    attribute.preventDefault()
-    console.log(attribute)
     let temp = []
     games.map(function(value,index){
         temp.push(value[attribute])
-        temp.sort()
-        console.log(temp)
-    })
-    console.log(temp)
-    console.log(temp.length)
-    console.log(games.length)
-    /*let temp2 = [];
+        if(attribute=="release"){
+            temp.sort((a, b) => a - b);
+        }
+        else{
+            temp.sort()
+        }
+    })                                
+    let temp2 = [];
+    let temp3 = []
     for(let i=0;i<temp.length;i++){
-        for(let j=0;j<games.length;i++)
+        for(let j=0;j<games.length;j++){
             if(games[j][attribute]==temp[i]){
-                temp2.push(games[j])
-            }
-    }
-    setGames(temp2)*/
-  }
+                if(!temp3.includes(j)){
+                    temp2.push(games[j])
+                    temp3.push(j)
+                    break
+                }
 
+            }
+        }
+    }
+    setGames(temp2)
+  }
   const submitSearch = (e) =>{
     e.preventDefault()
     axios.get(`https://backendexample.sanbersy.com/api/games`)

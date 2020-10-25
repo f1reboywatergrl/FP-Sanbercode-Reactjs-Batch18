@@ -7,46 +7,50 @@ import List from '@material-ui/core/List';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import swal from 'sweetalert';
+import PropTypes from 'prop-types';
 
-const SortDialog = (props) =>{
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
-
-  return(
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Sort items by...</DialogTitle>
-        <List>
-            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                <ListItemText >Reset Default</ListItemText>
-            </ListItem>
-            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                <ListItemText>Title</ListItemText>
-            </ListItem>
-            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                <ListItemText>Genre</ListItemText>
-            </ListItem>
-            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                <ListItemText>Release Year</ListItemText>
-            </ListItem>
-            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                <ListItemText>Rating</ListItemText>
-            </ListItem>
-            <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                <ListItemText>Duration</ListItemText>
-            </ListItem>
-        </List>
-    </Dialog>
-  )
-}
 
 const EditMovies = () => {
+  const SortDialog = (props) =>{
+    const { onClose, selectedValue, open } = props;
+
+    const handleClose = () => {
+      onClose(selectedValue);
+    };
+
+    const handleListItemClick = (value) => {
+      onClose(value);
+      handleSelectedSort(value);
+    };
+
+    return(
+      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <DialogTitle id="simple-dialog-title">Sort items by...</DialogTitle>
+          <List>
+              <ListItem autoFocus button onClick={() => handleListItemClick('title')}>
+                  <ListItemText>Title</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('genre')}>
+                  <ListItemText>Genre</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('release')}>
+                  <ListItemText>Release Year</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('rating')}>
+                  <ListItemText>Rating</ListItemText>
+              </ListItem>
+              <ListItem autoFocus button onClick={() => handleListItemClick('duration')}>
+                  <ListItemText>Duration</ListItemText>
+              </ListItem>
+          </List>
+      </Dialog>
+    )
+  }
+  SortDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+  };  
   const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => {
@@ -247,7 +251,38 @@ const EditMovies = () => {
     }
   }
   
+  function handleSelectedSort(attribute){
+    submitSort(attribute);
+  }
+  function submitSort(attribute){
+    let temp = []
+    movies.map(function(value,index){
+        temp.push(value[attribute])
+        if(attribute=="rating" || attribute=="duration"){
+            temp.sort((a, b) => a - b);
+        }
+        else{
+            temp.sort()
+        }
+        console.log(temp)
+    })                                
+    console.log(temp)
+    let temp2 = [];
+    let temp3 = []
+    for(let i=0;i<temp.length;i++){
+        for(let j=0;j<movies.length;j++){
+            if(movies[j][attribute]==temp[i]){
+                if(!temp3.includes(j)){
+                    temp2.push(movies[j])
+                    temp3.push(j)
+                    break
+                }
 
+            }
+        }
+    }
+    setMovies(temp2)
+  }
   const submitSearch = (e) =>{
     e.preventDefault()
     axios.get(`https://www.backendexample.sanbersy.com/api/movies`)

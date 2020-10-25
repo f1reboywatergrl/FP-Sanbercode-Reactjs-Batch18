@@ -42,7 +42,6 @@ const Nav = () => {
       e.stopPropagation()
       //setTheme(theme==="dark"?"light":"dark")
     }
-    useEffect(()=>console.log(LightDarkContext) )
     //{ user!==null?<Dropdown.Header>Welcome back, {userData.name}!</Dropdown.Header>:null}
     return(    
       <AppBar style={{position:"static"}}>

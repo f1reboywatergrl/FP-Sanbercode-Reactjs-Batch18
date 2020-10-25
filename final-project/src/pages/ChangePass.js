@@ -13,6 +13,11 @@ const ChangePass = () =>{
       return <Redirect to ="/about"/>      
   }  
 
+  const handleLogout = () =>{
+    setUser(null)
+    localStorage.removeItem("email")
+  }
+
   const userData = JSON.parse(localStorage.getItem('email'))
 
   const handleSubmit = (event) =>{
@@ -31,6 +36,7 @@ const ChangePass = () =>{
           swal("Password successfully changed!",{
             button:"Close"
           })
+          handleLogout()
       }).catch(res=>{
         swal ( "Invalid input!" ,  "Please recheck your password inputs!" ,  "error" )
       })

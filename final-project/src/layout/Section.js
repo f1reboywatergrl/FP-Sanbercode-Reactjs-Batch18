@@ -37,6 +37,7 @@ const Section = () =>{
         <LoginRoute exact path="/login" user={user} component={Login}/>
         <PrivateRoute path="/movies/1" user={user} component={()=>SingleMovie(1)}/>
         <PrivateRoute path="/games/{id}" user={user} component={SingleGame}/>
+        <PrivateRoute exact path="/" user={user} component={Movies}/>
         <PrivateRoute exact path="/movies" user={user} component={Movies}/>
         <PrivateRoute exact path="/games" user={user} component={Games}/>
         <PrivateRoute exact path="/editmovies" user={user} component={EditMovies}/>
