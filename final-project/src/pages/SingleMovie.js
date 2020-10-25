@@ -3,10 +3,9 @@ import {useParams} from "react-router-dom"
 import axios from "axios"
 
 
-const SingleMovie = () => {
-  let { id } = useParams();
+const SingleMovie = (id) => {
   const [movie, setMovie] = useState(null) 
-
+  console.log(id)
   useEffect(()=>{
     if (movie === null){
       axios.get(`https://www.backendexample.sanbersy.com/api/movies/${id}`)

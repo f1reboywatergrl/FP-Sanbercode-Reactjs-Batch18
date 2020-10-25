@@ -53,7 +53,7 @@ class GameList extends Component {
                                   <Card.Title style={{margin:"1%",textAlign:"center",fontSize:"2em"}}><strong>{item.name}</strong></Card.Title>
                                 </div>
                                 <div style={{display:"flex",justifyContent:"center",flexDirection:"row",marginTop:"4%"}}>
-                                    <button type="button" class="btn btn-primary">View Details</button>                                 
+                                    <a href={`/games/${item.id}`}type="button" class="btn btn-primary">View Details</a>                                 
                                 </div>
 
                               <div style={{display:"flex",justifyContent:"center",flexDirection:"row",borderBottom: "1px solid lightgrey",padding:"3%"}}>

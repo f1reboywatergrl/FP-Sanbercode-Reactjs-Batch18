@@ -175,7 +175,6 @@ const EditMovies = () => {
         })
         
       }
-      alert("Changes successfully made!")
       setStatusForm("create")
       setSelectedId(0)
       setInput({
@@ -271,8 +270,12 @@ const EditMovies = () => {
   return(
     <>
       <div>
-        <form onSubmit={submitSearch}>
-          <input type="text" value={search} onChange={handleChangeSearch} style={{height:"35px",width:"250px",marginRight:"1%"}} placeholder="Search a movie title..." />
+        <form onSubmit={submitSearch} style={{justifyContent:"space-around"}}>
+          <label for="inp" value={search} onChange={handleChangeSearch} style={{marginRight:"1%"}} class="inp">
+            <input type="text"  placeholder="&nbsp;"/>
+            <span class="label">Search</span>
+            <span class="focus-bg"></span>
+          </label><br/>
           <button className="btn btn-outline-info" style={{marginRight:"1%"}}>Search</button>
           <button className="btn btn-outline-danger" onClick={resetSearch} style={{marginRight:"1%"}}>Reset Field</button>
           <button className="btn btn-outline-success" onClick={handleClickOpen}>Sort Data</button>
@@ -318,67 +321,60 @@ const EditMovies = () => {
         </tbody>
       </table>
       {/* Form */}
-      <h1>Movies Form</h1>
+      <h3 style={{textAlign:"center", marginTop:"1%"}}>Movies Form</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label style={{float: "left"}}>
-            Title:
-          </label>
-          <input style={{float: "right"}} type="text" name="title" value={input.title} onChange={handleChange}/>
-          <br/>
-          <br/>
+          <label for="inp" class="inp">
+            <input type="text" name="title" onChange={handleChange} value={input.title} placeholder="&nbsp;"/>
+            <span class="label">Title</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
         <div>
-          <label style={{float: "left"}}>
-            Description:
-          </label>
-          <textarea style={{float: "right"}} type="text" name="description" value={input.description} onChange={handleChange}/>
-          <br/>
-          <br/>
+          <label for="inp" class="inp">
+            <input type="text" name="description" onChange={handleChange} value={input.description} placeholder="&nbsp;"/>
+            <span class="label">Description</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Year:
-          </label>
-          <input style={{float: "right"}} type="number" max={2020} min={1980}  name="year" value={input.year} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="number" name="year" max={2020} min={1980} onChange={handleChange} value={input.year} placeholder="&nbsp;"/>
+            <span class="label">Year</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Duration:
-          </label>
-          <input style={{float: "right"}} type="number" name="duration" value={input.duration} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="text" name="number" onChange={handleChange} value={input.duration} placeholder="&nbsp;"/>
+            <span class="label">Duration</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Genre:
-          </label>
-          <input style={{float: "right"}} type="text" name="genre" value={input.genre} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="text" name="genre" onChange={handleChange} value={input.genre} placeholder="&nbsp;"/>
+            <span class="label">Genre</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Rating:
-          </label>
-          <input style={{float: "right"}} type="number" max={10} min={0} name="rating" value={input.rating} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="number" name="rating" onChange={handleChange} max={10} min={0} value={input.rating} placeholder="&nbsp;"/>
+            <span class="label">Rating</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Image Url:
-          </label>
-          <textarea style={{float: "right"}} cols="50" rows="3" type="text" name="image_url" value={input.image_url} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="text" name="image_url" onChange={handleChange} value={input.image_url} placeholder="&nbsp;"/>
+            <span class="label">Image URL</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
         <br/>
         <br/>
-        <button>Submit</button>
+        <button className="btn btn-outline-info">Submit</button>
       </form>
     </>
   )

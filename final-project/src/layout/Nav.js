@@ -36,6 +36,7 @@ const Nav = () => {
       setUser(null)
       localStorage.removeItem("email")
     }
+
     const classes = useStyles();
     return(    
       <AppBar style={{position:"static"}}>
@@ -63,6 +64,7 @@ const Nav = () => {
                       <Dropdown.Divider/>
                       { user === null && <Dropdown.Item href="/login">Login</Dropdown.Item> }
                       { user && <Dropdown.Item href="#" style={{cursor: "pointer"}} onClick={handleLogout}>Logout</Dropdown.Item> }
+                      { user && <Dropdown.Item href="/changepass">Change Password</Dropdown.Item>}
                       <Dropdown.Divider/>
                       <Dropdown.Item>
                           <WbIncandescentIcon></WbIncandescentIcon><Switch></Switch>

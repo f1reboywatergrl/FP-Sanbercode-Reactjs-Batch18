@@ -61,7 +61,7 @@ class Movies extends Component {
                                 <Card.Title style={{textAlign:"center",fontSize:"3em"}}><strong>{item.title}</strong></Card.Title>                                
                               </div>
                               <div style={{display:"flex",justifyContent:"center",flexDirection:"row",marginTop:"4%"}}>
-                                <button type="button" class="btn btn-primary">View Details</button>                                 
+                                <a href={`/movies/${item.id}`} type="button" class="btn btn-primary">View Details</a>                                 
                               </div>
                               
                             </div>

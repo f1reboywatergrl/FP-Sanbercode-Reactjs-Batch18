@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {UserContext} from "../context/UserContext"
 import {
   Redirect
@@ -7,6 +7,7 @@ import axios from "axios"
 
 const Login = () =>{
   const [, setUser] = useContext(UserContext)
+  const [dataUser, setDataUser] = useState(null)
   const [input, setInput] = useState({email: "", password: "",token:"",name:""})
   const [inputChange, setInputChange] = useState({token:"",password:"",new_password:"",new_confirm_password:""})
   const [statusLogin, setStatusLogin] = useState("login");
@@ -14,6 +15,9 @@ const Login = () =>{
   function redirectLogin(){
       return <Redirect to ="/about"/>      
   }  
+  useEffect( ()=>{
+    console.log(input)
+  })
 
   const handleSubmit = (event) =>{
     event.preventDefault()
@@ -23,15 +27,13 @@ const Login = () =>{
         password:input.password
       })
       .then(res => {
-          console.log(res.data)
-          console.log(res.data.token)
+          console.log(res)
           console.log(res.data.user.name)
-          let temp_name = res.data.user.name
-          let temp_token = 1
-          console.log(input)          
+          console.log(res.data.token)    
+          setInput({...input,name:res.data.user.name,token:res.data.token})                                
           setUser({email:input.email})
-          localStorage.setItem("email", JSON.stringify({email: input.email, password: input.password,token:input.token, name:temp_name}))
-
+          localStorage.setItem("email", JSON.stringify({email: input.email, password: input.password,token:input.token, name: res.data.user.name,token:res.data.token}))
+        
           redirectLogin()
       }).catch(res=>{
         console.log("Gabisa")
@@ -81,33 +83,60 @@ const Login = () =>{
     setStatusLogin("register")
   }
 
+  const switchToLogin = () => {
+    setStatusLogin("login")
+  }
+
   return(
     <>
       {statusLogin==="login"?
+      <div>
+        <h3 style={{textAlign:"center"}}>Login</h3>
         <form onSubmit={handleSubmit}>
-          <label>email: </label>
-          <input type="text" name="email" onChange={handleChange} value={input.email}/>
-          <br/>
-          <label>Password: </label>
-          <input type="password" name="password" onChange={handleChange} value={input.password}/>
-          <br/>
-          <button>Login</button>
-          <button onClick={switchToRegister}>Register</button>
-        </form>                  
+          <label for="inp" class="inp">
+            <input type="text" name="email" onChange={handleChange} value={input.email} placeholder="&nbsp;"/>
+            <span class="label">Email</span>
+            <span class="focus-bg"></span>
+          </label><br/>
+          <label for="inp" class="inp">
+            <input type="password" name="password" onChange={handleChange} value={input.password} placeholder="&nbsp;"/>
+            <span class="label">Password</span>
+            <span class="focus-bg"></span>
+          </label><br/><br/>
+          <button class="btn btn-outline-info" style={{marginRight:"1%"}}>Login</button>
+          <button class="btn btn-outline-warning" onClick={switchToRegister}>Register a New Account</button>
+
+          
+        </form>        
+      </div>
+
+                  
     
       :
+      <div>
+        <h3 style={{textAlign:"center"}}>Register</h3>        
         <form onSubmit={handleSubmit}>
-        <label>Email: </label>
-        <input type="text" name="email" onChange={handleChange} value={input.email}/>
-        <br/>
-        <label>Name: </label>
-        <input type="text" name="name" onChange={handleChange} value={input.name}/>
-        <br/>
-        <label>Password: </label>
-        <input type="password" name="password" onChange={handleChange} value={input.password}/>
-        <br/>
-        <button>Register</button>
-      </form>      
+        <label for="inp" class="inp">
+          <input type="text" name="email" onChange={handleChange} value={input.email} placeholder="&nbsp;"/>
+          <span class="label">Email</span>
+          <span class="focus-bg"></span>
+        </label><br/>
+        <label for="inp" class="inp">
+          <input type="text" name="name" onChange={handleChange} value={input.name} placeholder="&nbsp;"/>
+          <span class="label">Name</span>
+          <span class="focus-bg"></span>
+        </label><br/>
+        <label for="inp" class="inp">
+          <input type="password" name="password" onChange={handleChange} value={input.password} placeholder="&nbsp;"/>
+          <span class="label">Password</span>
+          <span class="focus-bg"></span>
+        </label><br/><br/>
+
+        <button class="btn btn-outline-info" style={{marginRight:"1%"}}>Register</button>
+        <button class="btn btn-outline-warning" onClick={switchToLogin}>Back To Login</button>
+      </form>         
+      </div>
+     
       }
 
     </>

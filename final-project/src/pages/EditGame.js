@@ -69,8 +69,8 @@ const EditGames = () => {
   const [games, setGames] =  useState(null)
   const [input, setInput]  =  useState({
     name: "",
-    singlePlayer: 0,
-    multiplayer: 0,
+    singlePlayer: null,
+    multiplayer: null,
     platform: "",
     genre: "",
     release: "",
@@ -191,8 +191,8 @@ const EditGames = () => {
       setSelectedId(0)
       setInput({
         name: "",
-        singlePlayer: 0,
-        multiplayer: 0,
+        singlePlayer: null,
+        multiplayer: null,
         platform: "",
         genre: "",
         release: "",
@@ -301,13 +301,18 @@ const EditGames = () => {
   }
   const resetSearch = ()=>{
     setSearch("")
+
   }
 
   return(
     <>
       <div>
-        <form onSubmit={submitSearch}>
-          <input type="text" value={search} onChange={handleChangeSearch} style={{height:"35px",width:"250px",marginRight:"1%"}} placeholder="Search for a game title..."/>
+        <form onSubmit={submitSearch} style={{justifyContent:"center"}}>
+          <label for="inp" value={search} onChange={handleChangeSearch} style={{marginRight:"1%"}} class="inp">
+            <input type="text"  placeholder="&nbsp;"/>
+            <span class="label">Search</span>
+            <span class="focus-bg"></span>
+          </label><br/>
           <button className="btn btn-outline-info" style={{marginRight:"1%"}}>Search</button>
           <button className="btn btn-outline-danger" onClick={resetSearch}style={{marginRight:"1%"}}>Reset Field</button>
           <button className="btn btn-outline-success" onClick={handleClickOpen}>Sort Data</button>
@@ -353,64 +358,56 @@ const EditGames = () => {
         </tbody>
       </table>
       {/* Form */}
-      <h1>Games Form</h1>
+      <h3 style={{textAlign:"center",marginTop:"1%"}}>Games Form</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label style={{float: "left"}}>
-            Name:
-          </label>
-          <input style={{float: "right"}} type="text" name="name" value={input.name} onChange={handleChange}/>
-          <br/>
-          <br/>
+          <label for="inp" class="inp">
+            <input type="text" name="name" onChange={handleChange} value={input.name} placeholder="&nbsp;"/>
+            <span class="label">Name</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
         <div>
-          <label style={{float: "left"}}>
-            Genre:
-          </label>
-          <textarea style={{float: "right"}} type="text" name="genre" value={input.genre} onChange={handleChange}/>
-          <br/>
-          <br/>
+          <label for="inp" class="inp">
+            <input type="text" name="genre" onChange={handleChange} value={input.genre} placeholder="&nbsp;"/>
+            <span class="label">Genre</span>
+            <span class="focus-bg"></span>
+          </label><br/>      
         </div>
-
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Single Player (0=False, 1=True):
-          </label>
-          <input style={{float: "right"}} type="number" name="singlePlayer" max={1} min={0} value={input.singlePlayer} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="number" name="singlePlayer" max={1} min={0} onChange={handleChange} value={input.singlePlayer} placeholder="&nbsp;"/>
+            <span class="label">Single Player (0=False, 1=True)</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Multi Player (0=False, 1=True):
-          </label>
-          <input style={{float: "right"}} type="number" name="multiplayer" max={1} min={0} value={input.multiplayer} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="number" name="multiplayer" onChange={handleChange} max={1} min={0} value={input.multiplayer} placeholder="&nbsp;"/>
+            <span class="label">Multi Player (0=False, 1=True)</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Platform:
-          </label>
-          <input style={{float: "right"}} type="text"  name="platform" value={input.platform} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="text" name="platform" onChange={handleChange} value={input.platform} placeholder="&nbsp;"/>
+            <span class="label">Platform</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Release:
-          </label>
-          <input style={{float: "right"}} type="number" name="release" value={input.release} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="number" name="release" onChange={handleChange} value={input.release} placeholder="&nbsp;"/>
+            <span class="label">Release</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
-        <div style={{marginTop: "20px"}}>
-          <label style={{float: "left"}}>
-            Image Url:
-          </label>
-          <textarea style={{float: "right"}} cols="50" rows="3" type="text" name="image_url" value={input.image_url} onChange={handleChange}/>
-          <br/>
-          <br/>
+        <div>
+          <label for="inp" class="inp">
+            <input type="textarea" name="image_url" onChange={handleChange} value={input.image_url} placeholder="&nbsp;"/>
+            <span class="label">Image URL</span>
+            <span class="focus-bg"></span>
+          </label><br/>
         </div>
         <br/>
         <br/>

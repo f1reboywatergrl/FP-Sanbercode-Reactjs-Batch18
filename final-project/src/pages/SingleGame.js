@@ -20,7 +20,7 @@ const SingleGame = () => {
     <>
       {game !== null &&
         <>
-          <h1>{game.title}</h1>
+          <h1>{game.name}</h1>
           <p>{game.description}</p>
           <p><img width="200" src={game.image_url}/></p>
         </>
