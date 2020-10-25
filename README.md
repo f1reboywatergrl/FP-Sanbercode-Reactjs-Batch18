@@ -8,7 +8,7 @@ Documentation:
 
 Login page
 
-![alt text](https://github.com/f1reboywatergrl/FP-Sanbercode-Reactjs-Batch18/blob/main/final-project/src/documentation/login.png?raw=true)
+![alt text](https://github.com/f1reboywatergrl/FP-Sanbercode-Reactjs-Batch18/blob/main/final-project/src/documentation/films.png?raw=true)
 
 View films page (default redirect after login)
 
