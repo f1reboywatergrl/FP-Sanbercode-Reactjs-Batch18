@@ -266,7 +266,6 @@ const EditMovies = () => {
         }
         console.log(temp)
     })                                
-    console.log(temp)
     let temp2 = [];
     let temp3 = []
     for(let i=0;i<temp.length;i++){
